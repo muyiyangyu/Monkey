@@ -7,3 +7,4 @@ module.exports = {
   printWidth: 80, //单行代码最大宽度
   tabWidth: 2 //tab锁进空格数
 };
+
