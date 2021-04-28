@@ -4,8 +4,9 @@
  * @module src/App.tsx
  * @author yangxiang
  */
+
 import "react-native-gesture-handler";
-import React, { Component, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Image, ImageSourcePropType, Text, View } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { RootSiblingParent } from "react-native-root-siblings";
@@ -20,7 +21,6 @@ const RootStack = createStackNavigator();
 
 //TabBar
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Auth from "pages/common/auth";
 import { Home } from "pages/home";
 import { Order } from "pages/order";
 import { Main } from "pages/main";
@@ -144,9 +144,7 @@ const Logins = () => {
   );
 };
 
-const AuthScreens = {
-  Auth: Auth
-};
+const AuthScreens = {};
 
 const TabScreen = {
   Home: MyTabs

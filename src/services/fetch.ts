@@ -14,7 +14,6 @@ import {
 } from "types/http";
 import { appApi } from "config";
 import { showToast } from "./toast";
-import { optionStore } from "stores/option";
 
 //构造函数
 export const formatURL = (

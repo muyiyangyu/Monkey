@@ -9,15 +9,12 @@ import React, { Component } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { StyleSheet } from "/components/styleSheet";
 import { IPageProps } from "/types/props";
-import { userStore } from "stores/user";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export interface IIndexProps extends IPageProps {}
 
 export class Login extends Component<IIndexProps> {
-  onPressTheme = (): void => {
-    userStore.updateIsSignIn(true);
-  };
+  onPressTheme = (): void => {};
 
   render(): JSX.Element {
     const { styles } = obStyles;

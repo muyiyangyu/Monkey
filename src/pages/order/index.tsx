@@ -8,14 +8,11 @@
 import React, { Component, RefObject } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { IPageProps, NavigationProps } from "/types/props";
-import { optionStore } from "stores/option";
 
 export interface IIndexProps extends IPageProps {}
 
 export class Order extends Component<IIndexProps> {
-  onPressTheme = () => {
-    optionStore.updateDarkTheme(!optionStore.darkTheme);
-  };
+  onPressTheme = () => {};
 
   render() {
     const { styles } = obStyles;

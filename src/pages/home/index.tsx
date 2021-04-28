@@ -15,7 +15,6 @@ import {
   View
 } from "react-native";
 import { IPageProps } from "/types/props";
-import { optionStore } from "stores/option";
 import colors from "style/colors";
 import sizes from "style/sizes";
 import { LANGUAGES } from "constants/language";
@@ -29,17 +28,11 @@ export class Home extends Component<IIndexProps> {
     this.state = { fadeAnim: new Animated.Value(0) };
   }
 
-  onPressTheme = (): void => {
-    optionStore.updateDarkTheme(!optionStore.darkTheme);
-  };
+  onPressTheme = (): void => {};
 
   onPressToLogin = (): void => {};
 
-  onPressUpdateLanguage = (): void => {
-    optionStore.updateLanguage(
-      optionStore.language === LANGUAGES.ZH ? LANGUAGES.EN : LANGUAGES.ZH
-    );
-  };
+  onPressUpdateLanguage = (): void => {};
 
   render(): JSX.Element {
     const { styles } = obStyles;
