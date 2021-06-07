@@ -16,8 +16,9 @@ import { Text } from "components/common/text";
 import { LANGUAGE_KEYS } from "constants/language";
 import colors from "style/colors";
 import fonts from "style/fonts";
-import i18n from "stores/i18n";
+import { t } from "stores/i18nSlice";
 import { IS_IOS } from "config";
+import { useAppDispatch } from "stores/hooks";
 
 interface I18nTitleProps extends TextProps {
   size?: number;
@@ -27,6 +28,7 @@ interface I18nTitleProps extends TextProps {
 
 export const AutoI18nTitle = (props: I18nTitleProps): JSX.Element => {
   const { i18nKey, style } = props;
+  const dispatch = useAppDispatch();
   const styles = [
     {
       color: props.color,
@@ -34,7 +36,7 @@ export const AutoI18nTitle = (props: I18nTitleProps): JSX.Element => {
     },
     style
   ];
-  return <Text style={styles}>{i18nKey && i18n.t(i18nKey)}</Text>;
+  return <Text style={styles}>{i18nKey && dispatch(t(i18nKey))}</Text>;
 };
 
 interface IHeaderTitleProps extends I18nTitleProps {

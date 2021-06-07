@@ -35,33 +35,46 @@ export const languageMaps: TLanguageList = {
   }
 };
 
-const languages: TLanguages = { en, zh };
-
-class I18nStore {
-  private language: TLanguage = LANGUAGES.ZH;
-
-  public updateLanguage(language: TLanguage) {
-    this.language = language;
-  }
-
-  public t(key: LANGUAGE_KEYS): string {
-    return languages[this.language][key];
-  }
-
-  public translate(
-    key: LANGUAGE_KEYS,
-    language: TLanguage = this.language
-  ): string {
-    return languages[language][key];
-  }
-}
-
-export const i18n = new I18nStore();
-export default i18n;
-export const updateLanguage = i18n.updateLanguage.bind(i18n);
 export const getDeviceLanguage = (): TLanguage => {
   const localTags = RNLocalize.getLocales().map((local) => local.languageCode);
   return localTags.some((tag) => tag.toLocaleLowerCase().includes(LANGUAGES.ZH))
     ? LANGUAGES.ZH
     : LANGUAGES.EN;
 };
+
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+// Define a type for the slice state
+interface I18nState {
+  language: TLanguage;
+  languages: TLanguages;
+}
+
+interface I18nPayloadState {
+  key: LANGUAGE_KEYS;
+}
+
+// Define the initial state using that type
+const initialState: I18nState = {
+  language: LANGUAGES.ZH,
+  languages: { en, zh }
+};
+
+export const I18nSlice = createSlice({
+  name: "i18n",
+  initialState,
+  reducers: {
+    updateLanguage: (state) => {
+      state.language =
+        state.language == LANGUAGES.ZH ? LANGUAGES.EN : LANGUAGES.ZH;
+    },
+    t: (state, payload) => {
+      // @ts-ignore
+      return state.languages[state.language][payload];
+    }
+  }
+});
+
+export const { updateLanguage, t } = I18nSlice.actions;
+
+export default I18nSlice.reducer;
