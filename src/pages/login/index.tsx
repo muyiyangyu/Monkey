@@ -8,27 +8,27 @@
 import React, { Component } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { StyleSheet } from "/components/styleSheet";
-import { IPageProps } from "/types/props";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useAppSelector, useAppDispatch } from "/stores/hooks";
+import { decrement, increment } from "stores/counterSlice";
 
-export interface IIndexProps extends IPageProps {}
+export const Login = (): JSX.Element => {
+  const count = useAppSelector((state) => state.counter.value);
+  const dispatch = useAppDispatch();
 
-export class Login extends Component<IIndexProps> {
-  onPressTheme = (): void => {};
-
-  render(): JSX.Element {
-    const { styles } = obStyles;
-    return (
-      <SafeAreaView>
-        <View style={styles.container}>
-          <TouchableOpacity onPress={this.onPressTheme}>
-            <Text>去首页</Text>
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
-    );
-  }
-}
+  const { styles } = obStyles;
+  return (
+    <SafeAreaView>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={() => dispatch(increment())}>
+          <Text>加加加</Text>
+        </TouchableOpacity>
+        <Text>去首页</Text>
+        <Text>{count}</Text>
+      </View>
+    </SafeAreaView>
+  );
+};
 
 const obStyles = {
   get styles() {

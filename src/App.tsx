@@ -6,9 +6,8 @@
  */
 
 import "react-native-gesture-handler";
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import { Image, ImageSourcePropType, Text, View } from "react-native";
-import SplashScreen from "react-native-splash-screen";
 import { RootSiblingParent } from "react-native-root-siblings";
 import {
   initialWindowMetrics,
@@ -30,11 +29,14 @@ const Tab = createBottomTabNavigator();
 import { Login } from "pages/login";
 
 //公用组件、样式
-
+import Splashscreen from "components/Splashscreen";
 import { StyleSheet } from "/components/styleSheet";
 import colors from "/style/colors";
 
 //mobx || redux
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "stores/store";
 import { Images } from "components";
 import { AutoI18nTitle } from "components/layout/title";
 import { LANGUAGE_KEYS } from "constants/language";
@@ -157,43 +159,51 @@ const LoginScreen = {
 const RoutesScreens = {};
 
 export const App = () => {
-  useEffect(() => {
-    SplashScreen.hide();
-  });
+  useEffect(() => {});
 
   return (
-    <RootSiblingParent>
-      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-        <NavigationContainer
-          theme={{
-            dark: false,
-            colors: {
-              primary: colors.primary,
-              background: colors.background,
-              card: colors.cardBackground,
-              text: colors.textDefault,
-              border: colors.border,
-              notification: colors.notification
-            }
-          }}>
-          <RootStack.Navigator
-            initialRouteName={"Home"}
-            // 动态配置屏幕选项，跟下面的setHeaderTitle方法联在一起看
-            // screenOptions={({ route }) => setHeaderTitle(route)}
-            headerMode="none" // 如果要自定义配置header，必须设置这个为screen
-          >
-            {Object.entries({
-              // 首页组
-              ...LoginScreen,
-              // 详情页组
-              ...RoutesScreens
-            }).map(([name, component]) => (
-              <RootStack.Screen name={name} component={component} key={name} />
-            ))}
-          </RootStack.Navigator>
-        </NavigationContainer>
-      </SafeAreaProvider>
-    </RootSiblingParent>
+    <Suspense fallback={<Splashscreen />}>
+      <RootSiblingParent>
+        <Provider store={store}>
+          <PersistGate loading={<Splashscreen />} persistor={persistor}>
+            <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+              <NavigationContainer
+                theme={{
+                  dark: false,
+                  colors: {
+                    primary: colors.primary,
+                    background: colors.background,
+                    card: colors.cardBackground,
+                    text: colors.textDefault,
+                    border: colors.border,
+                    notification: colors.notification
+                  }
+                }}>
+                <RootStack.Navigator
+                  initialRouteName={"Home"}
+                  // 动态配置屏幕选项，跟下面的setHeaderTitle方法联在一起看
+                  // screenOptions={({ route }) => setHeaderTitle(route)}
+                  headerMode="none" // 如果要自定义配置header，必须设置这个为screen
+                >
+                  {Object.entries({
+                    // 首页组
+                    ...LoginScreen,
+                    // 详情页组
+                    ...RoutesScreens
+                  }).map(([name, component]) => (
+                    <RootStack.Screen
+                      name={name}
+                      component={component}
+                      key={name}
+                    />
+                  ))}
+                </RootStack.Navigator>
+              </NavigationContainer>
+            </SafeAreaProvider>
+          </PersistGate>
+        </Provider>
+      </RootSiblingParent>
+    </Suspense>
   );
 };
 
