@@ -7,10 +7,12 @@
 import AsyncStorage from "@react-native-community/async-storage";
 
 import counterSlice from "stores/counterSlice";
+import optionSlice from "stores/optionSlice";
 import { persistCombineReducers } from "redux-persist";
 
 const reducers = {
-  counter: counterSlice
+  counter: counterSlice,
+  option: optionSlice
 };
 
 const persistConfig = {

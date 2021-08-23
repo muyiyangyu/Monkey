@@ -43,38 +43,38 @@ export const getDeviceLanguage = (): TLanguage => {
 };
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { useAppSelector } from "stores/hooks";
+import { RootState } from "stores/rootReducer";
 
 // Define a type for the slice state
-interface I18nState {
+interface OptionsState {
   language: TLanguage;
   languages: TLanguages;
 }
 
-interface I18nPayloadState {
-  key: LANGUAGE_KEYS;
-}
-
 // Define the initial state using that type
-const initialState: I18nState = {
+const initialState: OptionsState = {
   language: LANGUAGES.ZH,
   languages: { en, zh }
 };
 
-export const I18nSlice = createSlice({
-  name: "i18n",
+export const OptionSlice = createSlice({
+  name: "option",
   initialState,
   reducers: {
     updateLanguage: (state) => {
       state.language =
         state.language == LANGUAGES.ZH ? LANGUAGES.EN : LANGUAGES.ZH;
-    },
-    t: (state, payload) => {
-      // @ts-ignore
-      return state.languages[state.language][payload];
     }
   }
 });
 
-export const { updateLanguage, t } = I18nSlice.actions;
+export function t(key: LANGUAGE_KEYS): string {
+  const languages: TLanguages = { en, zh };
+  const language = useAppSelector((state) => state.option.language);
+  return languages[language][key];
+}
 
-export default I18nSlice.reducer;
+export const { updateLanguage } = OptionSlice.actions;
+
+export default OptionSlice.reducer;

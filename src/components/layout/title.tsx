@@ -16,7 +16,7 @@ import { Text } from "components/common/text";
 import { LANGUAGE_KEYS } from "constants/language";
 import colors from "style/colors";
 import fonts from "style/fonts";
-import { t } from "stores/i18nSlice";
+import { t } from "stores/optionSlice";
 import { IS_IOS } from "config";
 import { useAppDispatch } from "stores/hooks";
 

@@ -11,9 +11,10 @@ import { StyleSheet } from "/components/styleSheet";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAppSelector, useAppDispatch } from "/stores/hooks";
 import { decrement, increment } from "stores/counterSlice";
+import { RootState } from "stores/rootReducer";
 
 export const Main = (): JSX.Element => {
-  const count = useAppSelector((state) => state.counter.value);
+  const count = useAppSelector((state: RootState) => state.counter.value);
   console.log("------", count);
   const dispatch = useAppDispatch();
 
